@@ -1,0 +1,17 @@
+services:
+  site:
+    build: .
+    image: tp-final-site:1.0
+    ports:
+      - "8080:80"
+    restart: unless-stopped
+
+  servidor-http:
+    image: python:3.12-alpine
+    working_dir: /app
+    command: python -m http.server 8000 --bind 0.0.0.0
+    volumes:
+      - ./servidor-http:/app:ro
+    ports:
+      - "8081:8000"
+    restart: unless-stopped
